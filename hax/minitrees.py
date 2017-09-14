@@ -55,7 +55,7 @@ class TreeMaker(object):
 
     # Want to store something more in the metadata for this tree? Put here
     extra_metadata = {}
-    
+
     def __init__(self):
         # Support for string arguments
         if isinstance(self.branch_selection, str):

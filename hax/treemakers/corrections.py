@@ -52,7 +52,7 @@ class Corrections(TreeMaker):
                       'start_time']
 
     extra_metadata = hax.config['corrections_definitions']
-    
+
     # Electron Lifetime: hopefully doc was pulled in hax.init.
     # Otherwise get it here at significantly higher DB cost
     try:
