@@ -38,7 +38,7 @@ class Corrections(TreeMaker):
     for electron lifetime and x, y dependence.
 
     """
-    __version__ = '1.2'
+    __version__ = '1.4.2'
     extra_branches = ['peaks.s2_saturation_correction',
                       'interactions.s2_lifetime_correction',
                       'peaks.area_fraction_top',
@@ -82,8 +82,9 @@ class Corrections(TreeMaker):
             if 'run_min' not in entry or self.run_number < entry['run_min']:
                 continue
             if 'run_max' not in entry or self.run_number <= entry['run_max']:
-                if 'file_name' in entry:
+                if 'file_name' in entry:                    
                     return entry['file_name']
+
         return None
 
     def extract_data(self, event):
@@ -129,9 +130,13 @@ class Corrections(TreeMaker):
         # corrected positions (where the interaction happens)
         interaction_r = np.sqrt(interaction.x ** 2 + interaction.y ** 2)
         r_observed = interaction_r - interaction.r_correction
+        result['r_correction_pax'] = interaction.r_correction
+        phi = np.arctan2(interaction.y, interaction.x)
+        
         z_observed = interaction.z - interaction.z_correction
-        x_observed = (r_observed / interaction_r) * interaction.x
-        y_observed = (r_observed / interaction_r) * interaction.y
+        x_observed = r_observed * np.cos(phi)
+        y_observed = r_observed * np.sin(phi)
+        
         # phi = np.arctan2(y_observed, x_observed)
 
         result['s2_xy_correction_tot'] = (1.0 /
@@ -177,8 +182,8 @@ class Corrections(TreeMaker):
         result['z_correction'] = self.fdc_map.get_value(r_observed, z_observed, map_name='to_true_z')
 
         result['r'] = r_observed + result['r_correction']
-        result['x'] = (result['r']/result['r_observed']) * x_observed
-        result['y'] = (result['r']/result['r_observed']) * y_observed
+        result['x'] = result['r'] * np.cos(phi)
+        result['y'] = result['r'] * np.sin(phi)
         result['z'] = z_observed + result['z_correction']
 
         # Apply LCE (light collection efficiency correction to s1)
