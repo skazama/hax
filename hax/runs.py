@@ -370,7 +370,7 @@ def tags_selection(dsets=None, include=None, exclude=None, pattern_type='fnmatch
     if exclude is not None:
         dsets = dsets[True ^ _tags_match(dsets, exclude, pattern_type, ignore_underscore)]
 
-    if len(include):
+    if include is not None and len(include):
         # For each include tag, get and print the "tag version" (if it exists).
         # This is mostly used for the sciencerunX tags.
         collection = get_rundb_collection()
