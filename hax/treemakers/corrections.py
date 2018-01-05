@@ -10,7 +10,7 @@ class Corrections(TreeMaker):
 
     Provides:
     - Corrected S1 contains xyz-correction:
-      - cs1: The corrected area of the main interaction's S1 using NN 3D FDC after correction of electric field effects 
+      - cs1: The corrected area of the main interaction's S1 using NN 3D FDC after correction of electric field effects
       - cs1_no_field_corr: The corrected area in pe of the main interaction's S1 using NN 3D FDC (no field effects corrected)
       - cs1_tpf_2dfdc: Same as cs1_no_field_corr but for TPF 2D FDC
 
@@ -208,7 +208,7 @@ class Corrections(TreeMaker):
                 "s1_lce_map_nn_fdc_3d", self.run_number, cvals)
         )
         result['cs1_no_field_corr'] = s1.area * result['s1_xyz_correction_nn_fdc_3d']
-        
+
         # Apply corrected LCE (light collection efficiency correction to s1)
 
         cvals = [result['x_3d_nn'], result['y_3d_nn'], result['z_3d_nn']]
