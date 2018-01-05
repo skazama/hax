@@ -209,9 +209,7 @@ class Corrections(TreeMaker):
         )
         result['cs1_no_field_corr'] = s1.area * result['s1_xyz_correction_nn_fdc_3d']
 
-        # Apply corrected LCE (light collection efficiency correction to s1)
-
-        cvals = [result['x_3d_nn'], result['y_3d_nn'], result['z_3d_nn']]
+        # Apply corrected LCE (light collection efficiency correction to s1, including field effects)
         result['s1_xyz_true_correction_nn_fdc_3d'] = (
             1 / self.corrections_handler.get_correction_from_map(
                 "s1_corrected_lce_map_nn_fdc_3d", self.run_number, cvals)
